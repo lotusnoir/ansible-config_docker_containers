@@ -1,0 +1,63 @@
+---
+### Install variables
+docker_containers_user: root
+docker_containers_group: root
+docker_containers_config_dir: "/opt/docker-compose"
+docker_containers_log_dir: "/data/log/kakfa_ui"
+
+### Docker compose
+docker_containers_compose: ""
+#  kafka-ui:
+#    services:
+#      kafka_ui:
+#        image: quay.io/cloudhut/kowl:master
+#        container_name: kafka_ui
+#        restart: unless-stopped
+#        ports:
+#          - 10.1.81.161:8080:8080
+#        environment:
+#          - KAFKA_BROKERS=10.1.81.161:9092
+#          - KAFKA_SCHEMAREGISTRY_ENABLED=true
+#          - KAFKA_SCHEMAREGISTRY_URLS=http://10.1.81.161:8081
+#        logging:
+#          options:
+#            tag: "kafka"
+#        volumes:
+#          - "/etc/timezone:/etc/timezone:ro"
+#          - "/etc/localtime:/etc/localtime:ro"
+#  wordpress:
+#    services:
+#      web:
+#        image: wordpress:latest
+#        container_name: wordpress-web
+#        ports:
+#          - "80:80"
+#        volumes:
+#          - ./config/php.conf.ini:/usr/local/etc/php/conf.d/conf.ini
+#          - ./wp-app:/var/www/html
+#        environment:
+#          WORDPRESS_DB_HOST: db
+#          WORDPRESS_DB_NAME: wp
+#          WORDPRESS_DB_USER: root
+#          WORDPRESS_DB_PASSWORD: rootpwd
+#        depends_on:
+#          - db
+#        links:
+#          - db
+#      db:
+#        image: mysql:latest
+#        ports:
+#          - "3306:3306"
+#        command: [
+#          '--default_authentication_plugin=mysql_native_password',
+#          '--character-set-server=utf8mb4',
+#          '--collation-server=utf8mb4_unicode_ci'
+#        ]
+#        volumes:
+#          - ./wp-data:/docker-entrypoint-initdb.d
+#          - db_data:/var/lib/mysql
+#        environment:
+#          MYSQL_DATABASE: "wp"
+#          MYSQL_ROOT_PASSWORD: "rootpwd"
+#    volumes:
+#      db_data:

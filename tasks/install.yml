@@ -1,0 +1,26 @@
+---
+- name: Create containers
+  when: docker_containers_compose is defined and docker_containers_compose|length>0
+  block:
+    - name: "Ensure docker-compose dirs exists"
+      ansible.builtin.file:
+        path: "{{ docker_containers_config_dir }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      with_items:
+        "{{ docker_containers_compose }}"
+
+    - name: "Create docker-compose files"
+      ansible.builtin.template:
+        src: docker-compose.yml.j2
+        dest: "{{ docker_containers_config_dir }}/{{ item }}/docker-compose.yml"
+        mode: 0644
+      with_items:
+        "{{ docker_containers_compose }}"
+
+    - name: "Launch docker compose build"
+      community.docker.docker_compose:
+        project_src: "{{ docker_containers_config_dir }}/{{ item }}"
+        state: present
+      with_items:
+        "{{ docker_containers_compose }}"
