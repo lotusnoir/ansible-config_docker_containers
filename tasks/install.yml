@@ -19,8 +19,7 @@
         "{{ docker_containers_compose }}"
 
     - name: "Launch docker compose build"
-      community.docker.docker_compose:
-        project_src: "{{ docker_containers_config_dir }}/{{ item }}"
-        state: present
+      ansible.builtin.command: "docker-compose -f {{ docker_containers_config_dir }}/{{ item }}/docker-compose.yml up -d"
+      changed_when: false
       with_items:
         "{{ docker_containers_compose }}"
